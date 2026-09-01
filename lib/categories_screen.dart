@@ -36,8 +36,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
+      final list = (data['meals'] ?? []) as List;
       setState(() {
-        categories = data['meals'] ?? [];
+        categories = list
+            .where((category) => category['strCategory'] != 'Pork')
+            .toList();
         isLoading = false;
       });
     } else {

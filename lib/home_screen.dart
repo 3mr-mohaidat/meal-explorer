@@ -43,7 +43,12 @@ class _HomeScreenState extends State<HomeScreen> {
       final data = jsonDecode(response.body);
       final list = data['meals'] as List;
       setState(() {
-        categories = ['All', ...list.map((m) => m['strCategory'] as String)];
+        categories = [
+          'All',
+          ...list
+              .map((m) => m['strCategory'] as String)
+              .where((category) => category != 'Pork'),
+        ];
       });
     }
   }
